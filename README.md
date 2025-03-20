@@ -13,3 +13,7 @@ Modifikasi fungsi handle_connection memungkinkan server Rust menampilkan halaman
 ![Commit 3 screen capture](/assets/images/commit3.png)
 
 Perubahan pada handle_connection membuat server lebih fleksibel dengan memproses permintaan secara berbeda berdasarkan URL yang diminta. Saya belajar bagaimana menangani permintaan HTTP secara lebih spesifik dengan memeriksa baris pertama dari request. Jika klien meminta /, server akan mengirimkan halaman utama, sedangkan untuk permintaan lainnya, server akan merespons dengan kode status 404 NOT FOUND dan halaman error. Ini mengajarkan pentingnya menangani berbagai kemungkinan permintaan untuk meningkatkan pengalaman pengguna dan mencegah error yang tidak ditangani dengan baik.
+
+# Commit 4 Reflection Notes
+
+Eksperimen ini menunjukkan kelemahan server yang menangani permintaan secara serial, di mana satu permintaan yang lambat dapat menghambat permintaan lain. Dengan menambahkan match untuk menangani /sleep, kita bisa melihat bagaimana permintaan yang memerlukan waktu lama (dengan thread::sleep) menyebabkan antrean bagi permintaan lain. Hal ini mengajarkan pentingnya menangani banyak permintaan secara konkuren agar server tetap responsif, terutama dalam skenario dunia nyata di mana permintaan datang secara simultan dan memiliki waktu eksekusi yang bervariasi.
