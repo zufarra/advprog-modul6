@@ -17,3 +17,10 @@ Perubahan pada handle_connection membuat server lebih fleksibel dengan memproses
 # Commit 4 Reflection Notes
 
 Eksperimen ini menunjukkan kelemahan server yang menangani permintaan secara serial, di mana satu permintaan yang lambat dapat menghambat permintaan lain. Dengan menambahkan match untuk menangani /sleep, kita bisa melihat bagaimana permintaan yang memerlukan waktu lama (dengan thread::sleep) menyebabkan antrean bagi permintaan lain. Hal ini mengajarkan pentingnya menangani banyak permintaan secara konkuren agar server tetap responsif, terutama dalam skenario dunia nyata di mana permintaan datang secara simultan dan memiliki waktu eksekusi yang bervariasi.
+
+# Commit 5 Reflection Notes
+
+Konsep thread pool diperkenalkan sebagai solusi untuk meningkatkan throughput server dengan mengelola konkurensi secara efisien. Thread pool menciptakan sejumlah thread terbatas yang siap menangani tugas, sehingga melindungi sistem dari serangan Denial of Service. Alih-alih menciptakan thread baru untuk setiap permintaan, thread pool mempertahankan antrian tugas yang diproses oleh thread yang tersedia. Pendekatan ini memungkinkan server menangani beberapa permintaan secara bersamaan tanpa menghabiskan sumber daya sistem.
+
+
+Implementasi thread pool dalam bahasa Rust dilakukan dengan menggunakan konsep compiler-driven development, di mana kode ditulis secara bertahap berdasarkan feedback dari compiler. Struktur Worker diperkenalkan untuk mengelola thread individual, dan saluran komunikasi (channels) digunakan untuk mengirimkan tugas dari ThreadPool ke Worker. Penggunaan Arc<Mutex<T>> memungkinkan berbagi kepemilikan receiver di antara beberapa thread dengan aman. Pendekatan ini mendemonstrasikan bagaimana Rust dapat mengimplementasikan konkurensi dengan aman dan efisien, mencegah race condition dan memastikan pemanfaatan sumber daya yang optimal.
